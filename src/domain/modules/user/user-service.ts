@@ -1,16 +1,18 @@
-import axios from 'axios';
 import { UserEntity } from './user-entity';
+import useAxios from '../../../utils/useAxios';
+
+const { post, get } = useAxios;
 
 export class UserService {
   async create(data: UserEntity) {
-    return axios.post('/user', data);
+    return post('/users', data);
   }
 
   async getAll() {
-    return axios.get('users');
+    return get('users');
   }
 
   async getById(id: number) {
-    return axios.get(`users${id}`);
+    return get(`users${id}`);
   }
 }
