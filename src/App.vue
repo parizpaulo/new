@@ -13,7 +13,6 @@ const userForm = ref<UserEntity>({
   name: '',
   email: '',
   age: 0,
-  id: 0
 });
 
 async function createUser() {
