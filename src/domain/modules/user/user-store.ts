@@ -17,14 +17,16 @@ export const useUserStore = defineStore('user', {
   }),
 
   getters: {
-    getUser: (state) => state.users,
+    getUsers: (state) => state.users,
     getErrors: (state) => state.errors,
   },
 
   actions: {
     async create(user: UserEntity) {
       try {
-        await userController.create(user);
+        const result = await userController.create(user);
+
+        this.users.push(result as UserEntity);
       } catch (error) {
         if (error instanceof ValidationErrorException) {
           this.errors = error.validationErrors;
@@ -32,6 +34,12 @@ export const useUserStore = defineStore('user', {
 
         return error;
       }
+    },
+
+    async fetchGetUsers() {
+      const users = await userController.getAll();
+
+      this.users = users as UserEntity[];
     },
   },
 });

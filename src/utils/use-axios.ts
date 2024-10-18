@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const instance = axios.create({
+export const useAxios = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL_API,
 });
 
-instance.interceptors.request.use(
+useAxios.interceptors.request.use(
   (config) => {
     return config;
   },
@@ -13,4 +13,4 @@ instance.interceptors.request.use(
   },
 );
 
-export default instance;
+export default useAxios;

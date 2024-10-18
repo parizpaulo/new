@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
 import { UserEntity } from './domain/modules/user/user-entity';
-import { ref } from 'vue';
+
 import { useUserStore } from './domain/modules/user/user-store';
 import { storeToRefs } from 'pinia';
 
 const userStore = useUserStore();
-const { getErrors } = storeToRefs(userStore);
+const { getErrors, getUsers } = storeToRefs(userStore);
 
 const userForm = ref<UserEntity>({
   name: '',
@@ -16,10 +18,15 @@ const userForm = ref<UserEntity>({
 async function createUser() {
   await userStore.create(userForm.value);
 }
+
+onMounted(async () => {
+  await userStore.fetchGetUsers()
+})
 </script>
 
 <template>
-  <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2">
+  <main class="m-10">
+
     <form @submit="createUser" class="bg-white px-8 pt-6 pb-8 mb-4 w-96 border border-gray-300 rounded-xl">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2"> Nome </label>
@@ -58,5 +65,23 @@ async function createUser() {
         Criar
       </button>
     </form>
-  </div>
+
+    <section class="grid grid-cols-6 gap-3 mt-11">
+      <div class="p-5 rounded-md border border-gray-200 grid gap-1" v-for="(item, index) in getUsers" :key="index">
+
+        <h1 class="text-lg font-semibold">
+          {{ item.name }}
+        </h1>
+
+        <span class="text-sm text-gray-500">
+          {{ item.email }}
+        </span>
+
+        <span class="text-sm text-gray-500">Idade: {{ item.age }}</span>
+
+      </div>
+    </section>
+
+  </main>
+
 </template>

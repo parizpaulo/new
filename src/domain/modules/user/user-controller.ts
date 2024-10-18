@@ -18,4 +18,8 @@ export class UserController {
 
     return this.userService.create(data);
   }
+
+  async getAll(): Promise<UserEntity[] | Error> {
+    return this.userService.getAll();
+  }
 }

@@ -1,5 +1,5 @@
 import { UserEntity } from './user-entity';
-import useAxios from '../../../utils/use-axios';
+import { useAxios } from '../../../utils/use-axios';
 
 const { post, get } = useAxios;
 
