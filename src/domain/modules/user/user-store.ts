@@ -7,18 +7,21 @@ const userController = new UserController();
 
 interface UserState {
   users: UserEntity[];
+  userSelected: Partial<UserEntity>;
   errors: Partial<UserEntity>;
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     users: [],
+    userSelected: {},
     errors: {},
   }),
 
   getters: {
     getUsers: (state) => state.users,
     getErrors: (state) => state.errors,
+    getUserSelected: (state) => state.userSelected,
   },
 
   actions: {
@@ -40,6 +43,17 @@ export const useUserStore = defineStore('user', {
       const users = await userController.getAll();
 
       this.users = users as UserEntity[];
+    },
+
+    async deleteUser(id: number) {
+      await userController.delete(id);
+      this.users = this.users.filter((user) => user.id !== id);
+    },
+
+    async getUserById(id: number) {
+      const user = await userController.getById(id);
+
+      this.userSelected = user;
     },
   },
 });

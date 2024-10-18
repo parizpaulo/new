@@ -22,4 +22,12 @@ export class UserController {
   async getAll(): Promise<UserEntity[] | Error> {
     return this.userService.getAll();
   }
+
+  async getById(id: number): Promise<UserEntity | Error> {
+    return this.userService.getById(id);
+  }
+
+  async delete(id: number) {
+    return this.userService.delete(id);
+  }
 }

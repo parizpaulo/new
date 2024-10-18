@@ -1,7 +1,7 @@
 import { UserEntity } from './user-entity';
 import { useAxios } from '../../../utils/use-axios';
 
-const { post, get } = useAxios;
+const { post, get, delete: remove } = useAxios;
 
 export class UserService {
   async create(data: UserEntity): Promise<UserEntity | Error> {
@@ -17,5 +17,9 @@ export class UserService {
   async getById(id: number): Promise<UserEntity | Error> {
     const response = await get(`/users/${id}`);
     return response.data as UserEntity;
+  }
+
+  async delete(id: number) {
+    return await remove(`/users/${id}`);
   }
 }
