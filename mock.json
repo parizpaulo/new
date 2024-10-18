@@ -1,3 +1,10 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "866ce9ad-449d-4897-b0ec-0387b8bd0f06",
+      "name": "tewjtew",
+      "email": "wenit@wr.com",
+      "age": 34
+    }
+  ]
 }

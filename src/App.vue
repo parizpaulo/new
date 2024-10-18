@@ -9,10 +9,14 @@ import { storeToRefs } from 'pinia';
 const userStore = useUserStore();
 const { getErrors, getUsers, getUserSelected } = storeToRefs(userStore);
 
+import { v4 as uuidv4 } from 'uuid';
+
+
 const userForm = ref<UserEntity>({
   name: '',
   email: '',
   age: 0,
+  id: uuidv4()
 });
 
 async function createUser() {
