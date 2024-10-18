@@ -1,6 +1,8 @@
 import { UserService } from './user-service';
 import { UserEntity } from './user-entity';
 import { UserCreateDTO } from './dto/user-create.dto';
+import { useValidate } from '../../../composables/use-validate';
+import { ValidationErrorException } from '../../../utils/validation-error-exception';
 
 export class UserController {
   private userService: UserService;
@@ -9,11 +11,11 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  async create(data: UserEntity) {
-    const user = UserCreateDTO.parse(data);
+  async create(data: UserEntity): Promise<UserEntity | Error> {
+    const { errors } = await useValidate().schema(UserCreateDTO).form(data);
 
-    if (!user) throw new Error('Error create user');
+    if (errors) throw new ValidationErrorException(errors);
 
-    await this.userService.create(data);
+    return this.userService.create(data);
   }
 }
